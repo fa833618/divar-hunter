@@ -51,7 +51,7 @@ PAGE = """<!doctype html>
 </head>
 <body>
 <div class="card">
- <h1>📦 divar_hunter.zip — {size} کیلوبایت</h1>
+ <h1>📦 divar_hunter.zip — __SIZE__ کیلوبایت</h1>
  <p class="muted">کل کدبیس «شکارچی معاملهٔ دیوار + بات تلگرام» — ۳۵ فایل</p>
 
  <a class="btn" href="/divar_hunter.zip" target="_blank" rel="noopener">⬇️ دانلود مستقیم (تب جدید)</a>
@@ -59,7 +59,7 @@ PAGE = """<!doctype html>
 
  <p>اگر هیچ‌کدام داخل این کادر کار نکرد، این لینک <b>دائمی</b> را کپی کن و در مرورگر خودت باز کن
     (حتی وقتی این سندباکس خاموش است هم کار می‌کند):<br>
-    <code>{raw}</code></p>
+    <code>__RAW__</code></p>
 
  <h1 style="font-size:16px">بعد از extract</h1>
 <pre>cd divar-hunter
@@ -67,7 +67,7 @@ python3 -m venv .venv && source .venv/bin/activate   # Windows: .venv\\Scripts\\
 pip install -r requirements.txt
 cp env.example .env
 python main.py --demo</pre>
- <p class="muted">sha256: <code>{sha}</code></p>
+ <p class="muted">sha256: <code>__SHA__</code></p>
 </div>
 </body>
 </html>
@@ -108,20 +108,20 @@ COPY = """<!doctype html>
 certutil -decode zip.b64 divar_hunter.zip
 # macOS / Linux:
 base64 -d zip.b64 &gt; divar_hunter.zip</pre>
- <p class="muted">sha256 خروجی باید برابر باشد با: <code>{sha}</code></p>
- <textarea id="b64" spellcheck="false">{b64}</textarea>
+ <p class="muted">sha256 خروجی باید برابر باشد با: <code>__SHA__</code></p>
+ <textarea id="b64" spellcheck="false">__B64__</textarea>
 </div>
 <script>
-document.getElementById('copy').onclick = async function () {{
+document.getElementById('copy').onclick = async function () {
   var t = document.getElementById('b64'), s = document.getElementById('status');
   t.value = t.value.trim();
-  try {{ await navigator.clipboard.writeText(t.value); s.textContent = '✅ کپی شد — برو مرحلهٔ ۲'; }}
-  catch (e) {{
+  try { await navigator.clipboard.writeText(t.value); s.textContent = '✅ کپی شد — برو مرحلهٔ ۲'; }
+  catch (e) {
     t.focus(); t.select();
-    var ok = false; try {{ ok = document.execCommand('copy'); }} catch (e2) {{}}
+    var ok = false; try { ok = document.execCommand('copy'); } catch (e2) {}
     s.textContent = ok ? '✅ کپی شد — برو مرحلهٔ ۲' : '⚠️ دستی: داخل کادر Ctrl+A و Ctrl+C';
-  }}
-}};
+  }
+};
 </script>
 </body>
 </html>
@@ -149,10 +149,10 @@ class Handler(http.server.BaseHTTPRequestHandler):
         path = self.path.split("?")[0]
         if path in ("/", "/index.html"):
             blob = self._zip_bytes()
-            page = PAGE.format(
-                size=len(blob) // 1024,
-                sha=hashlib.sha256(blob).hexdigest(),
-                raw=RAW_URL,
+            page = (
+                PAGE.replace("__SIZE__", str(len(blob) // 1024))
+                .replace("__SHA__", hashlib.sha256(blob).hexdigest())
+                .replace("__RAW__", RAW_URL)
             )
             self._send(page.encode("utf-8"), "text/html; charset=utf-8")
         elif path in ("/divar_hunter.zip", "/download", "/dl", "/zip"):
@@ -161,9 +161,9 @@ class Handler(http.server.BaseHTTPRequestHandler):
             )
         elif path == "/copy":
             blob = self._zip_bytes()
-            page = COPY.format(
-                sha=hashlib.sha256(blob).hexdigest(),
-                b64=base64.b64encode(blob).decode("ascii"),
+            page = (
+                COPY.replace("__SHA__", hashlib.sha256(blob).hexdigest())
+                .replace("__B64__", base64.b64encode(blob).decode("ascii"))
             )
             self._send(page.encode("utf-8"), "text/html; charset=utf-8")
         else:
