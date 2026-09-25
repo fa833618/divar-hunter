@@ -1,0 +1,109 @@
+{
+  "sections": [
+    {
+      "section_name": "TITLE",
+      "widgets": [
+        {
+          "widget_type": "LEGEND_TITLE_ROW",
+          "data": {
+            "title": "آیفون ۱۳ پرومکس ۲۵۶ گیگ سالم"
+          }
+        },
+        {
+          "widget_type": "EXPANDABLE_SECTION",
+          "data": {
+            "title": "لحظاتی پیش در سعادت‌آباد",
+            "widget_list": [
+              {
+                "data": {
+                  "text": "زمان انتشار آگهی: ۳۰ شهریور ۱۴۰۵، ۰۰:۰۵\nبه‌روزرسانی: ۳۰ شهریور ۱۴۰۵، ۰۰:۲۰"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "section_name": "DESCRIPTION",
+      "widgets": [
+        {
+          "widget_type": "DESCRIPTION_ROW",
+          "data": {
+            "text": "گوشی کاملاً سالم، بدون خط و خش، با جعبه و لوازم کامل. قیمت کل ۴۵٬۰۰۰٬۰۰۰ تومان، تخفیف جزئی پای معامله. فروش فوری به دلیل مهاجرت."
+          }
+        }
+      ]
+    },
+    {
+      "section_name": "LIST_DATA",
+      "widgets": [
+        {
+          "data": {
+            "title": "برند",
+            "value": "Apple"
+          }
+        },
+        {
+          "data": {
+            "title": "حافظه داخلی",
+            "value": "۲۵۶ گیگابایت"
+          }
+        },
+        {
+          "data": {
+            "title": "وضعیت",
+            "value": "دست دوم"
+          }
+        }
+      ]
+    },
+    {
+      "section_name": "IMAGE",
+      "widgets": [
+        {
+          "data": {
+            "image_list": [
+              {
+                "url": "https://s100.divarcdn.com/static/pictures/aDeaL001_1.webp"
+              },
+              {
+                "url": "https://s100.divarcdn.com/static/pictures/aDeaL001_2.webp"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "share": {
+    "title": "آیفون ۱۳ پرومکس ۲۵۶ گیگ سالم",
+    "web_url": "https://divar.ir/v/aDeaL001"
+  },
+  "contact": {
+    "chat_enabled": true,
+    "contact_uuid": "1d53da6a-test"
+  },
+  "webengage": {
+    "token": "aDeaL001",
+    "credit": 0,
+    "rent": 0,
+    "cat_2": "mobile-tablet",
+    "cat_1": "electronic-devices",
+    "status": "used",
+    "category": "mobile-phones",
+    "business_type": "personal",
+    "district": "saadat-abad",
+    "price": 45000000,
+    "originality": "original",
+    "city": "tehran",
+    "brand_model": "apple iphone 13 pro max",
+    "image_count": 2
+  },
+  "city": {
+    "city_id": "1",
+    "name": "تهران",
+    "parent_id": "904",
+    "second_slug": "tehran"
+  }
+}

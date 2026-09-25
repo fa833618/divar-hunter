@@ -1,0 +1,7 @@
+# Runtime dependencies (Python >= 3.9)
+requests>=2.31,<3
+python-dotenv>=1.0,<2
+
+# Optional, but required if TELEGRAM_PROXY / DIVAR_PROXY uses a socks5:// or
+# socks5h:// URL (HTTP/HTTPS proxies work without it).
+PySocks>=1.7.1,<2

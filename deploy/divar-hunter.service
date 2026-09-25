@@ -1,0 +1,36 @@
+[Unit]
+Description=Divar real-time deal hunter (Telegram alerts)
+Documentation=https://github.com/fa833618/divar-hunter
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Run as an unprivileged user that owns the checkout, the .env and data/logs.
+User=divar
+Group=divar
+WorkingDirectory=/opt/divar-hunter
+EnvironmentFile=-/opt/divar-hunter/.env
+ExecStart=/opt/divar-hunter/.venv/bin/python main.py
+
+# The app handles SIGTERM gracefully: it finishes the current cycle, flushes
+# SQLite state and exits. Give it room to do that.
+KillSignal=SIGTERM
+TimeoutStopSec=30
+Restart=always
+RestartSec=30
+
+# Logs go to stdout/stderr and (if LOG_FILE is set) to a rotated file.
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=divar-hunter
+
+# Hardening — the service only needs outbound HTTPS plus its own data dir.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=read-only
+ReadWritePaths=/opt/divar-hunter/data /opt/divar-hunter/logs
+
+[Install]
+WantedBy=multi-user.target

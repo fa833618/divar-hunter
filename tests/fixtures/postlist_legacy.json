@@ -1,0 +1,79 @@
+{
+  "web_widgets": {
+    "post_list": [
+      {
+        "data": {
+          "action": {
+            "type": "VIEW_POST",
+            "payload": {
+              "token": "aDeaL001",
+              "title": "آیفون ۱۳ پرومکس ۲۵۶ گیگ سالم"
+            }
+          },
+          "title": "آیفون ۱۳ پرومکس ۲۵۶ گیگ سالم",
+          "price": null,
+          "middle_description_text": "۴۵٬۰۰۰٬۰۰۰ تومان",
+          "bottom_description_text": "لحظاتی پیش در سعادت‌آباد",
+          "time": 1790022910,
+          "has_chat": true,
+          "image_count": 4
+        }
+      },
+      {
+        "data": {
+          "action": {
+            "type": "VIEW_POST",
+            "payload": {
+              "token": "bExpns02",
+              "title": "سامسونگ گلکسی S24 اولترا ۵۱۲"
+            }
+          },
+          "title": "سامسونگ گلکسی S24 اولترا ۵۱۲",
+          "price": null,
+          "middle_description_text": "۷۸٬۰۰۰٬۰۰۰ تومان",
+          "bottom_description_text": "۵ دقیقه پیش در نیاوران",
+          "time": 1790022670,
+          "has_chat": true,
+          "image_count": 6
+        }
+      },
+      {
+        "data": {
+          "action": {
+            "type": "VIEW_POST",
+            "payload": {
+              "token": "cNoPrc03",
+              "title": "فروش فوری گوشی شیائومی ردمی نوت ۱۲"
+            }
+          },
+          "title": "فروش فوری گوشی شیائومی ردمی نوت ۱۲",
+          "price": null,
+          "middle_description_text": "پرداخت توافقی",
+          "bottom_description_text": "۸ دقیقه پیش در تهرانپارس",
+          "time": 1790022490,
+          "has_chat": true,
+          "image_count": 1
+        }
+      },
+      {
+        "data": {
+          "action": {
+            "type": "VIEW_POST",
+            "payload": {
+              "token": "dDownP04",
+              "title": "فروش آیفون ۱۴ پرو — شرایط اقساطی"
+            }
+          },
+          "title": "فروش آیفون ۱۴ پرو — شرایط اقساطی",
+          "price": null,
+          "middle_description_text": "پیش‌پرداخت ۲۰٬۰۰۰٬۰۰۰ تومان",
+          "bottom_description_text": "۱۲ دقیقه پیش در پیروزی",
+          "time": 1790022250,
+          "has_chat": false,
+          "image_count": 2
+        }
+      }
+    ]
+  },
+  "last_post_date": "1790022070000000"
+}
