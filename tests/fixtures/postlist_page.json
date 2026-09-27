@@ -1,0 +1,646 @@
+{
+  "list_top_widgets": [
+    {
+      "widget_type": "POST_LIST_HEADLINE",
+      "data": {
+        "@type": "type.googleapis.com/widgets.PostListHeadline",
+        "text": "انواع آگهی‌های موبایل تهران - صفحه ۱"
+      }
+    }
+  ],
+  "list_widgets": [
+    {
+      "widget_type": "POST_ROW",
+      "data": {
+        "@type": "type.googleapis.com/widgets.PostRowData",
+        "title": "آیفون ۱۳ پرومکس ۲۵۶ گیگ سالم",
+        "action": {
+          "type": "VIEW_POST",
+          "payload": {
+            "@type": "type.googleapis.com/widgets.ViewPostPayload",
+            "token": "aDeaL001",
+            "web_info": {
+              "title": "آیفون ۱۳ پرومکس ۲۵۶ گیگ سالم",
+              "district_persian": "سعادت‌آباد",
+              "city_persian": "تهران"
+            },
+            "ad_instance_id": "8fe02d1e-test-aDeaL001_N"
+          }
+        },
+        "image_url": "https://s100.divarcdn.com/static/photo/neda/webp_thumbnail/aDeaL001/main.webp",
+        "bottom_description_text": "لحظاتی پیش در سعادت‌آباد",
+        "has_chat": true,
+        "middle_description_text": "۴۵٬۰۰۰٬۰۰۰ تومان",
+        "has_divider": true,
+        "image_count": 4,
+        "token": "aDeaL001",
+        "should_indicate_seen_status": true,
+        "layout_type": "GRID_ITEM"
+      },
+      "action_log": {
+        "server_side_info": {
+          "info": {
+            "@type": "type.googleapis.com/action_log.PostItemInfo",
+            "post_token": "aDeaL001",
+            "index": 0,
+            "post_type": "SEARCH",
+            "list_type": "PAGE",
+            "source_page": "POST_LIST_PAGE",
+            "sort_date": "2026-09-21T20:35:10.000000Z"
+          },
+          "item_type": {
+            "type": "POST_ITEM"
+          }
+        },
+        "enabled": true
+      }
+    },
+    {
+      "widget_type": "POST_ROW",
+      "data": {
+        "@type": "type.googleapis.com/widgets.PostRowData",
+        "title": "سامسونگ گلکسی S24 اولترا ۵۱۲",
+        "action": {
+          "type": "VIEW_POST",
+          "payload": {
+            "@type": "type.googleapis.com/widgets.ViewPostPayload",
+            "token": "bExpns02",
+            "web_info": {
+              "title": "سامسونگ گلکسی S24 اولترا ۵۱۲",
+              "district_persian": "نیاوران",
+              "city_persian": "تهران"
+            },
+            "ad_instance_id": "8fe02d1e-test-bExpns02_N"
+          }
+        },
+        "image_url": "https://s100.divarcdn.com/static/photo/neda/webp_thumbnail/bExpns02/main.webp",
+        "bottom_description_text": "۵ دقیقه پیش در نیاوران",
+        "has_chat": true,
+        "middle_description_text": "۷۸٬۰۰۰٬۰۰۰ تومان",
+        "has_divider": true,
+        "image_count": 6,
+        "token": "bExpns02",
+        "should_indicate_seen_status": true,
+        "layout_type": "GRID_ITEM"
+      },
+      "action_log": {
+        "server_side_info": {
+          "info": {
+            "@type": "type.googleapis.com/action_log.PostItemInfo",
+            "post_token": "bExpns02",
+            "index": 1,
+            "post_type": "SEARCH",
+            "list_type": "PAGE",
+            "source_page": "POST_LIST_PAGE",
+            "sort_date": "2026-09-21T20:31:10.000000Z"
+          },
+          "item_type": {
+            "type": "POST_ITEM"
+          }
+        },
+        "enabled": true
+      }
+    },
+    {
+      "widget_type": "POST_ROW",
+      "data": {
+        "@type": "type.googleapis.com/widgets.PostRowData",
+        "title": "فروش فوری گوشی شیائومی ردمی نوت ۱۲",
+        "action": {
+          "type": "VIEW_POST",
+          "payload": {
+            "@type": "type.googleapis.com/widgets.ViewPostPayload",
+            "token": "cNoPrc03",
+            "web_info": {
+              "title": "فروش فوری گوشی شیائومی ردمی نوت ۱۲",
+              "district_persian": "تهرانپارس",
+              "city_persian": "تهران"
+            },
+            "ad_instance_id": "8fe02d1e-test-cNoPrc03_N"
+          }
+        },
+        "image_url": "https://s100.divarcdn.com/static/photo/neda/webp_thumbnail/cNoPrc03/main.webp",
+        "bottom_description_text": "۸ دقیقه پیش در تهرانپارس",
+        "has_chat": true,
+        "middle_description_text": "پرداخت توافقی",
+        "has_divider": true,
+        "image_count": 1,
+        "token": "cNoPrc03",
+        "should_indicate_seen_status": true,
+        "layout_type": "GRID_ITEM"
+      },
+      "action_log": {
+        "server_side_info": {
+          "info": {
+            "@type": "type.googleapis.com/action_log.PostItemInfo",
+            "post_token": "cNoPrc03",
+            "index": 2,
+            "post_type": "SEARCH",
+            "list_type": "PAGE",
+            "source_page": "POST_LIST_PAGE",
+            "sort_date": "2026-09-21T20:28:10.000000Z"
+          },
+          "item_type": {
+            "type": "POST_ITEM"
+          }
+        },
+        "enabled": true
+      }
+    },
+    {
+      "widget_type": "POST_ROW",
+      "data": {
+        "@type": "type.googleapis.com/widgets.PostRowData",
+        "title": "فروش آیفون ۱۴ پرو — شرایط اقساطی",
+        "action": {
+          "type": "VIEW_POST",
+          "payload": {
+            "@type": "type.googleapis.com/widgets.ViewPostPayload",
+            "token": "dDownP04",
+            "web_info": {
+              "title": "فروش آیفون ۱۴ پرو — شرایط اقساطی",
+              "district_persian": "پیروزی",
+              "city_persian": "تهران"
+            },
+            "ad_instance_id": "8fe02d1e-test-dDownP04_N"
+          }
+        },
+        "image_url": "https://s100.divarcdn.com/static/photo/neda/webp_thumbnail/dDownP04/main.webp",
+        "bottom_description_text": "۱۲ دقیقه پیش در پیروزی",
+        "has_chat": false,
+        "middle_description_text": "پیش‌پرداخت ۲۰٬۰۰۰٬۰۰۰ تومان",
+        "has_divider": true,
+        "image_count": 2,
+        "token": "dDownP04",
+        "should_indicate_seen_status": true,
+        "layout_type": "GRID_ITEM"
+      },
+      "action_log": {
+        "server_side_info": {
+          "info": {
+            "@type": "type.googleapis.com/action_log.PostItemInfo",
+            "post_token": "dDownP04",
+            "index": 3,
+            "post_type": "SEARCH",
+            "list_type": "PAGE",
+            "source_page": "POST_LIST_PAGE",
+            "sort_date": "2026-09-21T20:24:10.000000Z"
+          },
+          "item_type": {
+            "type": "POST_ITEM"
+          }
+        },
+        "enabled": true
+      }
+    },
+    {
+      "widget_type": "POST_ROW",
+      "data": {
+        "@type": "type.googleapis.com/widgets.PostRowData",
+        "title": "گوشی نوکیا قدیمی سالم",
+        "action": {
+          "type": "VIEW_POST",
+          "payload": {
+            "@type": "type.googleapis.com/widgets.ViewPostPayload",
+            "token": "eCheap05",
+            "web_info": {
+              "title": "گوشی نوکیا قدیمی سالم",
+              "district_persian": "آزادی",
+              "city_persian": "تهران"
+            },
+            "ad_instance_id": "8fe02d1e-test-eCheap05_N"
+          }
+        },
+        "image_url": "https://s100.divarcdn.com/static/photo/neda/webp_thumbnail/eCheap05/main.webp",
+        "bottom_description_text": "۲۰ دقیقه پیش در آزادی",
+        "has_chat": true,
+        "middle_description_text": "۵۰۰٬۰۰۰ تومان",
+        "has_divider": true,
+        "image_count": 1,
+        "token": "eCheap05",
+        "should_indicate_seen_status": true,
+        "layout_type": "GRID_ITEM"
+      },
+      "action_log": {
+        "server_side_info": {
+          "info": {
+            "@type": "type.googleapis.com/action_log.PostItemInfo",
+            "post_token": "eCheap05",
+            "index": 4,
+            "post_type": "SEARCH",
+            "list_type": "PAGE",
+            "source_page": "POST_LIST_PAGE",
+            "sort_date": "2026-09-21T20:16:10.000000Z"
+          },
+          "item_type": {
+            "type": "POST_ITEM"
+          }
+        },
+        "enabled": true
+      }
+    },
+    {
+      "widget_type": "POST_ROW",
+      "data": {
+        "@type": "type.googleapis.com/widgets.PostRowData",
+        "title": "هدیه دادن گوشی خراب",
+        "action": {
+          "type": "VIEW_POST",
+          "payload": {
+            "@type": "type.googleapis.com/widgets.ViewPostPayload",
+            "token": "fFreez06",
+            "web_info": {
+              "title": "هدیه دادن گوشی خراب",
+              "district_persian": "ستارخان",
+              "city_persian": "تهران"
+            },
+            "ad_instance_id": "8fe02d1e-test-fFreez06_N"
+          }
+        },
+        "image_url": "",
+        "bottom_description_text": "۲۵ دقیقه پیش در ستارخان",
+        "has_chat": false,
+        "middle_description_text": "رایگان",
+        "has_divider": true,
+        "image_count": 0,
+        "token": "fFreez06",
+        "should_indicate_seen_status": true,
+        "layout_type": "GRID_ITEM"
+      },
+      "action_log": {
+        "server_side_info": {
+          "info": {
+            "@type": "type.googleapis.com/action_log.PostItemInfo",
+            "post_token": "fFreez06",
+            "index": 5,
+            "post_type": "SEARCH",
+            "list_type": "PAGE",
+            "source_page": "POST_LIST_PAGE",
+            "sort_date": "2026-09-21T20:11:10.000000Z"
+          },
+          "item_type": {
+            "type": "POST_ITEM"
+          }
+        },
+        "enabled": true
+      }
+    },
+    {
+      "widget_type": "POST_ROW",
+      "data": {
+        "@type": "type.googleapis.com/widgets.PostRowData",
+        "title": "آیفون ۱۲ خراب برای قطعات",
+        "action": {
+          "type": "VIEW_POST",
+          "payload": {
+            "@type": "type.googleapis.com/widgets.ViewPostPayload",
+            "token": "gParts07",
+            "web_info": {
+              "title": "آیفون ۱۲ خراب برای قطعات",
+              "district_persian": "یافت‌آباد",
+              "city_persian": "تهران"
+            },
+            "ad_instance_id": "8fe02d1e-test-gParts07_N"
+          }
+        },
+        "image_url": "https://s100.divarcdn.com/static/photo/neda/webp_thumbnail/gParts07/main.webp",
+        "bottom_description_text": "۳۰ دقیقه پیش در یافت‌آباد",
+        "has_chat": true,
+        "middle_description_text": "۱۵٬۰۰۰٬۰۰۰ تومان",
+        "has_divider": true,
+        "image_count": 3,
+        "token": "gParts07",
+        "should_indicate_seen_status": true,
+        "layout_type": "GRID_ITEM"
+      },
+      "action_log": {
+        "server_side_info": {
+          "info": {
+            "@type": "type.googleapis.com/action_log.PostItemInfo",
+            "post_token": "gParts07",
+            "index": 6,
+            "post_type": "SEARCH",
+            "list_type": "PAGE",
+            "source_page": "POST_LIST_PAGE",
+            "sort_date": "2026-09-21T20:06:10.000000Z"
+          },
+          "item_type": {
+            "type": "POST_ITEM"
+          }
+        },
+        "enabled": true
+      }
+    },
+    {
+      "widget_type": "POST_ROW",
+      "data": {
+        "@type": "type.googleapis.com/widgets.PostRowData",
+        "title": "هواوی P30 پرو در حد نو",
+        "action": {
+          "type": "VIEW_POST",
+          "payload": {
+            "@type": "type.googleapis.com/widgets.ViewPostPayload",
+            "token": "hStale08",
+            "web_info": {
+              "title": "هواوی P30 پرو در حد نو",
+              "district_persian": "صادقیه",
+              "city_persian": "تهران"
+            },
+            "ad_instance_id": "8fe02d1e-test-hStale08_N"
+          }
+        },
+        "image_url": "https://s100.divarcdn.com/static/photo/neda/webp_thumbnail/hStale08/main.webp",
+        "bottom_description_text": "۳ ساعت پیش در صادقیه",
+        "has_chat": true,
+        "middle_description_text": "۱۸٬۰۰۰٬۰۰۰ تومان",
+        "has_divider": true,
+        "image_count": 2,
+        "token": "hStale08",
+        "should_indicate_seen_status": true,
+        "layout_type": "GRID_ITEM"
+      },
+      "action_log": {
+        "server_side_info": {
+          "info": {
+            "@type": "type.googleapis.com/action_log.PostItemInfo",
+            "post_token": "hStale08",
+            "index": 7,
+            "post_type": "SEARCH",
+            "list_type": "PAGE",
+            "source_page": "POST_LIST_PAGE",
+            "sort_date": "2026-09-21T17:36:10.000000Z"
+          },
+          "item_type": {
+            "type": "POST_ITEM"
+          }
+        },
+        "enabled": true
+      }
+    },
+    {
+      "widget_type": "POST_ROW",
+      "data": {
+        "@type": "type.googleapis.com/widgets.PostRowData",
+        "title": "معاوضه گوشی با لپ‌تاپ",
+        "action": {
+          "type": "VIEW_POST",
+          "payload": {
+            "@type": "type.googleapis.com/widgets.ViewPostPayload",
+            "token": "iSwapx09",
+            "web_info": {
+              "title": "معاوضه گوشی با لپ‌تاپ",
+              "district_persian": "ونک",
+              "city_persian": "تهران"
+            },
+            "ad_instance_id": "8fe02d1e-test-iSwapx09_N"
+          }
+        },
+        "image_url": "https://s100.divarcdn.com/static/photo/neda/webp_thumbnail/iSwapx09/main.webp",
+        "bottom_description_text": "۴۵ دقیقه پیش در ونک",
+        "has_chat": true,
+        "middle_description_text": "معاوضه",
+        "has_divider": true,
+        "image_count": 2,
+        "token": "iSwapx09",
+        "should_indicate_seen_status": true,
+        "layout_type": "GRID_ITEM"
+      },
+      "action_log": {
+        "server_side_info": {
+          "info": {
+            "@type": "type.googleapis.com/action_log.PostItemInfo",
+            "post_token": "iSwapx09",
+            "index": 8,
+            "post_type": "SEARCH",
+            "list_type": "PAGE",
+            "source_page": "POST_LIST_PAGE",
+            "sort_date": "2026-09-21T19:51:10.000000Z"
+          },
+          "item_type": {
+            "type": "POST_ITEM"
+          }
+        },
+        "enabled": true
+      }
+    },
+    {
+      "widget_type": "POST_ROW",
+      "data": {
+        "@type": "type.googleapis.com/widgets.PostRowData",
+        "title": "رهن کامل سوئیت مبله",
+        "action": {
+          "type": "VIEW_POST",
+          "payload": {
+            "@type": "type.googleapis.com/widgets.ViewPostPayload",
+            "token": "jDepst10",
+            "web_info": {
+              "title": "رهن کامل سوئیت مبله",
+              "district_persian": "جنت‌آباد",
+              "city_persian": "تهران"
+            },
+            "ad_instance_id": "8fe02d1e-test-jDepst10_N"
+          }
+        },
+        "image_url": "https://s100.divarcdn.com/static/photo/neda/webp_thumbnail/jDepst10/main.webp",
+        "bottom_description_text": "۵۰ دقیقه پیش در جنت‌آباد",
+        "has_chat": true,
+        "middle_description_text": "ودیعه ۱۰۰٬۰۰۰٬۰۰۰ تومان",
+        "has_divider": true,
+        "image_count": 5,
+        "token": "jDepst10",
+        "should_indicate_seen_status": true,
+        "layout_type": "GRID_ITEM"
+      },
+      "action_log": {
+        "server_side_info": {
+          "info": {
+            "@type": "type.googleapis.com/action_log.PostItemInfo",
+            "post_token": "jDepst10",
+            "index": 9,
+            "post_type": "SEARCH",
+            "list_type": "PAGE",
+            "source_page": "POST_LIST_PAGE",
+            "sort_date": "2026-09-21T19:46:10.000000Z"
+          },
+          "item_type": {
+            "type": "POST_ITEM"
+          }
+        },
+        "enabled": true
+      }
+    },
+    {
+      "widget_type": "POST_ROW",
+      "data": {
+        "@type": "type.googleapis.com/widgets.PostRowData",
+        "title": "شیائومی می ۱۱ اولترا — قیمت کل ۳۲ میلیون",
+        "action": {
+          "type": "VIEW_POST",
+          "payload": {
+            "@type": "type.googleapis.com/widgets.ViewPostPayload",
+            "token": "kMiDec11",
+            "web_info": {
+              "title": "شیائومی می ۱۱ اولترا — قیمت کل ۳۲ میلیون",
+              "district_persian": "فرمانیه",
+              "city_persian": "تهران"
+            },
+            "ad_instance_id": "8fe02d1e-test-kMiDec11_N"
+          }
+        },
+        "image_url": "https://s100.divarcdn.com/static/photo/neda/webp_thumbnail/kMiDec11/main.webp",
+        "bottom_description_text": "۱ ساعت پیش در فرمانیه",
+        "has_chat": true,
+        "middle_description_text": "پیش پرداخت ۱۲٬۰۰۰٬۰۰۰ تومان",
+        "has_divider": true,
+        "image_count": 3,
+        "token": "kMiDec11",
+        "should_indicate_seen_status": true,
+        "layout_type": "GRID_ITEM"
+      },
+      "action_log": {
+        "server_side_info": {
+          "info": {
+            "@type": "type.googleapis.com/action_log.PostItemInfo",
+            "post_token": "kMiDec11",
+            "index": 10,
+            "post_type": "SEARCH",
+            "list_type": "PAGE",
+            "source_page": "POST_LIST_PAGE",
+            "sort_date": "2026-09-21T19:36:10.000000Z"
+          },
+          "item_type": {
+            "type": "POST_ITEM"
+          }
+        },
+        "enabled": true
+      }
+    }
+  ],
+  "action_log": {
+    "server_side_info": {
+      "info": {
+        "@type": "type.googleapis.com/action_log.PostListLoadPageInfo",
+        "cities": [
+          "1"
+        ],
+        "current_tab": "default",
+        "search_data": {
+          "form_data_json": "{\"data\":{\"category\":{\"str\":{\"value\":\"mobile-phones\"}}}}",
+          "cities": [
+            "1"
+          ],
+          "query_input_type": "TEXT"
+        },
+        "tokens": [
+          "aDeaL001",
+          "bExpns02",
+          "cNoPrc03",
+          "dDownP04",
+          "eCheap05",
+          "fFreez06",
+          "gParts07",
+          "hStale08",
+          "iSwapx09",
+          "jDepst10",
+          "kMiDec11"
+        ],
+        "has_next_page": true,
+        "page": 1,
+        "last_post_date_epoch": "1790019070000000",
+        "search_id": "3c08c51403d09b9ea300772577379267",
+        "search_uid": "8fe02d1e-b213-4857-ae33-8e734db264c2",
+        "posts_metadata": [
+          {
+            "token": "aDeaL001",
+            "sort_date": "1790022910000000",
+            "source": "f",
+            "extra_info": "{\"category\": \"mobile-phones\", \"highlight\": null, \"freshness\": 1}"
+          },
+          {
+            "token": "bExpns02",
+            "sort_date": "1790022670000000",
+            "source": "f",
+            "extra_info": "{\"category\": \"mobile-phones\", \"highlight\": null, \"freshness\": 1}"
+          },
+          {
+            "token": "cNoPrc03",
+            "sort_date": "1790022490000000",
+            "source": "f",
+            "extra_info": "{\"category\": \"mobile-phones\", \"highlight\": null, \"freshness\": 1}"
+          },
+          {
+            "token": "dDownP04",
+            "sort_date": "1790022250000000",
+            "source": "f",
+            "extra_info": "{\"category\": \"mobile-phones\", \"highlight\": null, \"freshness\": 1}"
+          },
+          {
+            "token": "eCheap05",
+            "sort_date": "1790021770000000",
+            "source": "f",
+            "extra_info": "{\"category\": \"mobile-phones\", \"highlight\": null, \"freshness\": 1}"
+          },
+          {
+            "token": "fFreez06",
+            "sort_date": "1790021470000000",
+            "source": "f",
+            "extra_info": "{\"category\": \"mobile-phones\", \"highlight\": null, \"freshness\": 1}"
+          },
+          {
+            "token": "gParts07",
+            "sort_date": "1790021170000000",
+            "source": "f",
+            "extra_info": "{\"category\": \"mobile-phones\", \"highlight\": null, \"freshness\": 1}"
+          },
+          {
+            "token": "hStale08",
+            "sort_date": "1790012170000000",
+            "source": "f",
+            "extra_info": "{\"category\": \"mobile-phones\", \"highlight\": null, \"freshness\": 1}"
+          },
+          {
+            "token": "iSwapx09",
+            "sort_date": "1790020270000000",
+            "source": "f",
+            "extra_info": "{\"category\": \"mobile-phones\", \"highlight\": null, \"freshness\": 1}"
+          },
+          {
+            "token": "jDepst10",
+            "sort_date": "1790019970000000",
+            "source": "f",
+            "extra_info": "{\"category\": \"apartment-rent\", \"highlight\": null, \"freshness\": 1}"
+          },
+          {
+            "token": "kMiDec11",
+            "sort_date": "1790019370000000",
+            "source": "f",
+            "extra_info": "{\"category\": \"mobile-phones\", \"highlight\": null, \"freshness\": 1}"
+          }
+        ],
+        "search_layer": "fulltext_t1"
+      },
+      "item_type": {
+        "type": "POST_LIST_LOAD_PAGE"
+      }
+    },
+    "enabled": true
+  },
+  "pagination": {
+    "has_next_page": true,
+    "data": {
+      "@type": "type.googleapis.com/post_list.PaginationData",
+      "last_post_date": "2026-09-21T19:31:10.000000Z",
+      "page": 2,
+      "layer_page": 1,
+      "search_uid": "8fe02d1e-b213-4857-ae33-8e734db264c2",
+      "cumulative_widgets_count": 11,
+      "viewed_tokens": "H4sIAAAAAAAE/3N0dGQAAD",
+      "filters_hash": "PAjFFAPQm56jAHcldzeSZw=="
+    }
+  },
+  "search_id": "3c08c51403d09b9ea300772577379267",
+  "seo_details": {
+    "title": "دیوار تهران - آگهی های موبایل | دیوار"
+  },
+  "show_no_search_result_notice": true
+}

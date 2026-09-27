@@ -1,0 +1,25 @@
+services:
+  divar-hunter:
+    build: .
+    image: divar-hunter:latest
+    container_name: divar-hunter
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      # Keep state and logs on the mounted volumes.
+      DB_PATH: /app/data/seen_tokens.db
+      LOG_FILE: /app/logs/divar-hunter.log
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    # Uncomment when your proxy runs on the Docker host (Linux needs the
+    # extra_hosts entry so host.docker.internal resolves):
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
+    stop_grace_period: 30s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
