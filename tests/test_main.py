@@ -9,7 +9,9 @@ import pytest
 
 from conftest import FIXTURE_NOW, FakeClient, FakeNotifier
 from divar_client import DivarClient, DivarError, DivarPost
+import main as main_module
 from main import Hunter, build_settings, main, parse_args, setup_logging
+from notifier import TelegramError
 from storage import SeenStore
 
 
@@ -335,6 +337,107 @@ def test_check_command_reports_a_bad_telegram_setup(monkeypatch, capsys):
     monkeypatch.delenv("DRY_RUN", raising=False)
     assert main(["--check"]) == 2
     assert "TELEGRAM_BOT_TOKEN" in capsys.readouterr().err
+
+
+class _StubNotifier:
+    """Stands in for build_notifier() so --check never touches the network."""
+
+    def __init__(self, report: str = "Telegram OK — bot @hunter", error=None) -> None:
+        self._report = report
+        self._error = error
+        self.closed = False
+
+    def verify(self) -> str:
+        if self._error is not None:
+            raise self._error
+        return self._report
+
+    def close(self) -> None:
+        self.closed = True
+
+
+def _stub_notifier(monkeypatch, error=None) -> None:
+    monkeypatch.setattr(main_module, "build_notifier", lambda settings, **kw: _StubNotifier(error=error))
+    monkeypatch.setenv("DRY_RUN", "false")
+    monkeypatch.setenv("TELEGRAM_BOT_TOKEN", "123:abc")
+    monkeypatch.setenv("TELEGRAM_CHAT_ID", "4242")
+
+
+def test_check_command_prints_a_persian_summary_when_every_stage_passes(monkeypatch, capsys):
+    _stub_notifier(monkeypatch)
+    monkeypatch.setattr(DivarClient, "probe", lambda self: "OK via modern: 3 rows")
+    assert main(["--check"]) == 0
+
+    out = capsys.readouterr().out
+    assert "خلاصهٔ تشخیص" in out
+    assert out.count("✅") == 3          # config + telegram + divar
+    assert "❌" not in out
+    assert "--test-alert" in out         # the summary points at the next step
+
+
+def test_check_command_translates_a_socks_failure_into_a_pyssocks_hint(monkeypatch, capsys):
+    _stub_notifier(monkeypatch, error=TelegramError("Missing dependencies for SOCKS support"))
+    monkeypatch.setenv("TELEGRAM_PROXY", "socks5h://127.0.0.1:10808")
+    assert main(["--check"]) == 3
+
+    out = capsys.readouterr().out
+    assert "pip install PySocks" in out
+    assert "❌ تلگرام" in out
+    assert "✅ دیوار" not in out          # bailed out before the Divar stage
+
+
+def test_check_command_advises_dropping_a_foreign_divar_proxy(monkeypatch, capsys):
+    """Divar answers from inside Iran only, so the probe is retried direct."""
+    _stub_notifier(monkeypatch)
+    seen = []
+
+    def probe(self):
+        seen.append(self.settings.divar_proxy)
+        if self.settings.divar_proxy:
+            raise DivarError("Divar rejected the request: HTTP 403", status=403)
+        return "OK via modern: 5 rows"
+
+    monkeypatch.setattr(DivarClient, "probe", probe)
+    monkeypatch.setenv("DIVAR_PROXY", "socks5h://127.0.0.1:10808")
+    assert main(["--check"]) == 0
+    assert seen == ["socks5h://127.0.0.1:10808", None]
+
+    out = capsys.readouterr().out
+    assert "DIVAR_PROXY" in out and "خالی" in out
+
+
+def test_check_command_reports_divar_unreachable_in_both_routes(monkeypatch, capsys):
+    _stub_notifier(monkeypatch)
+    calls = []
+
+    def probe(self):
+        calls.append(self.settings.divar_proxy)
+        raise DivarError("Divar did not answer", retryable=False)
+
+    monkeypatch.setattr(DivarClient, "probe", probe)
+    monkeypatch.setenv("DIVAR_PROXY", "socks5h://127.0.0.1:10808")
+    assert main(["--check"]) == 4
+    assert len(calls) == 2
+
+    out = capsys.readouterr().out
+    assert "❌ دیوار" in out
+    assert "divar.ir" in out
+
+
+def test_check_command_does_not_retry_without_a_proxy_when_none_is_set(monkeypatch, capsys):
+    _stub_notifier(monkeypatch)
+    calls = []
+
+    def probe(self):
+        calls.append(self.settings.divar_proxy)
+        raise DivarError("Divar did not answer")
+
+    monkeypatch.setattr(DivarClient, "probe", probe)
+    monkeypatch.delenv("DIVAR_PROXY", raising=False)
+    monkeypatch.delenv("PROXY_URL", raising=False)
+    assert main(["--check"]) == 4
+    assert calls == [None]
+    assert "داخل ایران" in capsys.readouterr().out
 
 
 def test_test_alert_command_uses_the_dry_run_notifier(monkeypatch, capsys):

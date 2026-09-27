@@ -28,10 +28,12 @@ import asyncio
 import copy
 import json
 import logging
+import os
 import signal
 import sys
 import threading
 import time
+from dataclasses import replace
 from datetime import datetime, timezone
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
@@ -411,36 +413,215 @@ def _filter_summary(settings: Settings) -> str:
 # --------------------------------------------------------------------------- #
 # CLI commands
 # --------------------------------------------------------------------------- #
-def command_check(settings: Settings) -> int:
+_ENV_PROXY_VARS = (
+    "HTTP_PROXY",
+    "HTTPS_PROXY",
+    "ALL_PROXY",
+    "http_proxy",
+    "https_proxy",
+    "all_proxy",
+)
+
+
+def _proxy_label(url: Optional[str]) -> str:
+    """A log-safe one-liner for a proxy setting (credentials are dropped)."""
+    if not url:
+        return "direct (no proxy)"
+    scheme, _, rest = url.partition("://")
+    host = rest.rsplit("@", 1)[-1]
+    return f"{scheme}://{host}"
+
+
+def _env_proxy_report() -> List[str]:
+    """Proxy variables inherited from the shell — requests honours them too."""
+    return [
+        f"{name}={_proxy_label(os.environ[name])}"
+        for name in _ENV_PROXY_VARS
+        if os.environ.get(name)
+    ]
+
+
+_CONNECTION_MARKERS = (
+    "max retries exceeded",
+    "failed to establish a new connection",
+    "connection aborted",
+    "connection refused",
+    "connection reset",
+    "remotely disconnected",
+    "connection has been closed",
+    "sslerror",
+    "eof occurred",
+    "bad handshake",
+)
+
+
+def _telegram_hint(exc: BaseException, settings: Settings) -> str:
+    """Translate a Telegram failure into the one thing to fix next (Persian)."""
+    text = str(exc)
+    low = text.lower()
+    status = getattr(exc, "status", None)
+
+    if "missing dependencies for socks" in low:
+        return "PySocks نصب نیست و پروکسی socks5 به آن نیاز دارد:  pip install PySocks"
+    if status == 401 or "unauthorized" in low:
+        return (
+            "توکن ربات رد شد (۴۰۱). TELEGRAM_BOT_TOKEN را کامل و بدون فاصله از "
+            "@BotFather کپی کن (فرمت: 123456789:AAE...) — اگر ربات را revoke کردی، توکن قبلی باطل است."
+        )
+    if "not reachable" in low or "chat not found" in low or "/start" in low:
+        return (
+            "ربات به آن چت دسترسی ندارد. اول در تلگرام ربات خودت را باز کن و دکمهٔ "
+            "Start را بزن، بعد TELEGRAM_CHAT_ID را عددی بگذار (گرفتن شناسه: @userinfobot؛ "
+            "برای کانال/گروه شناسه با -100 شروع می‌شود و ربات باید مدیر آن باشد)."
+        )
+    if "name or service not known" in low or "getaddrinfo" in low or "failed to resolve" in low:
+        return (
+            "DNS آدرس api.telegram.org را حل نکرد (در ایران رایج است). پروکسی را با "
+            "socks5h:// تنظیم کن تا DNS داخل پروکسی حل شود، یا DNS دستگاه را به 1.1.1.1 تغییر بده."
+        )
+    if "timed out" in low or "timeout" in low:
+        return (
+            "تایم‌اوت: پروکسی کند یا خاموش است. فیلترشکن را چک کن؛ اگر پروکسی نداری "
+            "TELEGRAM_PROXY را خالی بگذار و TELEGRAM_TIMEOUT را روی ۲۰ بگذار."
+        )
+    if "proxy" in low or any(marker in low for marker in _CONNECTION_MARKERS):
+        if settings.telegram_proxy:
+            return (
+                f"به پروکسیٔ تلگرام ({_proxy_label(settings.telegram_proxy)}) وصل نشد. "
+                "فیلترشکن/پروکسی روشن است؟ آدرس و پورت درست است؟ به‌جای socks5:// از "
+                "socks5h:// استفاده کن (h یعنی DNS هم از داخل پروکسی حل می‌شود و در ایران ضروری است)."
+            )
+        return (
+            "بدون پروکسی به api.telegram.org نرسیدیم — در ایران API تلگرام فیلتر است. "
+            "فیلترشکن را روشن کن و در .env بنویس:  TELEGRAM_PROXY=socks5h://127.0.0.1:PORT  "
+            "(PORT پورت SOCKS فیلترشکن توست؛ در v2rayNG/نکو معمولاً 10808 و در Tor Browser 9150)."
+        )
+    return (
+        "پیام خطای بالا را همان‌طور که هست برای من بفرست تا دقیق بگویم مشکل کجاست؛ "
+        "اگر پروکسی داری TELEGRAM_PROXY=socks5h://127.0.0.1:PORT را بررسی کن."
+    )
+
+
+def _divar_probe(settings: Settings) -> Tuple[bool, str, str]:
+    """Probe Divar, retrying without the proxy if the proxied attempt fails.
+
+    Returns ``(ok, detail, hint)``. A VPN exit outside Iran is the single most
+    common reason the listing API stays silent, so the retry tells the two
+    situations apart instead of leaving the user guessing.
+    """
+    client = DivarClient(settings)
+    try:
+        detail = client.probe()
+        LOGGER.info("Divar check: %s", detail)
+        return True, detail, ""
+    except DivarError as exc:
+        LOGGER.error("Divar check failed: %s", exc)
+        failed = str(exc)
+    finally:
+        client.close()
+
+    if not settings.divar_proxy:
+        return False, failed, (
+            "API دیوار معمولاً فقط به ترافیکِ داخل ایران پاسخ می‌دهد. اگر فیلترشکن/VPN "
+            "روشن است خاموشش کن (یا DIVAR_PROXY را به یک پروکسی ایرانی بده) و دوباره "
+            "--check را بزن. خطای دقیق بالا را هم برای من بفرست."
+        )
+
+    bare = replace(settings, divar_proxy=None)
+    bare_client = DivarClient(bare)
+    try:
+        detail = bare_client.probe()
+        LOGGER.info("Divar check without proxy: %s", detail)
+        return True, detail, (
+            "دیوار بدون پروکسی کار کرد! در .env مقدار DIVAR_PROXY (و PROXY_URL) را خالی "
+            "بگذار — پروکسی خارجی باعث ۴۰۳ می‌شود. پروکسی فقط برای تلگرام لازم است "
+            "(TELEGRAM_PROXY)."
+        )
+    except DivarError as exc:
+        LOGGER.error("Divar check without proxy also failed: %s", exc)
+    finally:
+        bare_client.close()
+
+    return False, failed, (
+        "دیوار نه با پروکسی و نه بی‌پروکسی پاسخ نداد. اینترنت را با باز کردن "
+        "https://divar.ir در مرورگر همان دستگاه تست کن؛ اگر باز شد خطای بالا را برای "
+        "من بفرست، اگر باز نشد مشکل از اتصال همان دستگاه است."
+    )
+
+
+def _report_check_summary(stages: Sequence[Tuple[str, bool, str]]) -> None:
+    """A short Persian verdict so the result is readable without English."""
+    LOGGER.info("─" * 62)
+    LOGGER.info("خلاصهٔ تشخیص (python main.py --check):")
+    for label, ok, detail in stages:
+        LOGGER.info("  %s %s — %s", "✅" if ok else "❌", label, detail)
+    if all(ok for _, ok, _ in stages):
+        LOGGER.info("  همه‌چیز آماده است. قدم بعدی:")
+        LOGGER.info("    python main.py --test-alert   # یک پیام نمونه به تلگرامت می‌فرستد")
+        LOGGER.info("    python main.py                # شروع پایش دائم")
+    else:
+        LOGGER.info("  اول موارد ❌ را درست کن، بعد دوباره: python main.py --check")
+    LOGGER.info("─" * 62)
+
+
+def command_check(settings: Settings, env_path: str = ".env") -> int:
     """Validate configuration, Telegram credentials and Divar reachability."""
+    stages: List[Tuple[str, bool, str]] = []
+
     problems = settings.problems()
     if problems:
         for problem in problems:
             LOGGER.error("config: %s", problem)
+        if not Path(env_path).exists():
+            LOGGER.error(
+                "❌ تنظیمات — فایل %s پیدا نشد. یک فایل به نام .env (دقیقاً با نقطهٔ اول) "
+                "در پوشهٔ پروژه بساز و مقادیر را در آن بگذار؛ .env.example فقط الگو است "
+                "و برنامه آن را نمی‌خواند.",
+                env_path,
+            )
+        else:
+            LOGGER.error("❌ تنظیمات — موارد بالا را در %s اصلاح کن.", env_path)
         return 2
     LOGGER.info("config OK | %s", settings.describe())
+    LOGGER.info(
+        "proxy plan | telegram -> %s | divar -> %s",
+        _proxy_label(settings.telegram_proxy),
+        _proxy_label(settings.divar_proxy),
+    )
+    inherited = _env_proxy_report()
+    if inherited:
+        LOGGER.warning(
+            "environment proxies are set (%s) — requests honours them, so Divar "
+            "traffic may be leaving through a VPN even with an empty DIVAR_PROXY",
+            ", ".join(inherited),
+        )
+    stages.append(("تنظیمات .env", True, settings.describe()))
 
     notifier = build_notifier(settings)
     try:
         LOGGER.info("%s", notifier.verify())
+        stages.append(("تلگرام", True, "توکن معتبر است و ربات چت را می‌شناسد"))
     except Exception as exc:  # noqa: BLE001
         LOGGER.error("Telegram check failed: %s", exc)
+        hint = _telegram_hint(exc, settings)
+        LOGGER.error("❌ تلگرام — %s", hint)
+        stages.append(("تلگرام", False, hint))
+        _report_check_summary(stages)
         return 3
     finally:
         notifier.close()
 
-    client = DivarClient(settings)
-    try:
-        LOGGER.info("Divar check: %s", client.probe())
-    except DivarError as exc:
-        LOGGER.error("Divar check failed: %s", exc)
-        LOGGER.error(
-            "Hint: Divar's listing API usually only answers traffic from inside "
-            "Iran — set DIVAR_PROXY (or PROXY_URL) in .env."
-        )
+    ok, detail, hint = _divar_probe(settings)
+    if not ok:
+        if hint:
+            LOGGER.error("❌ دیوار — %s", hint)
+        stages.append(("دیوار", False, hint or detail))
+        _report_check_summary(stages)
         return 4
-    finally:
-        client.close()
+    stages.append(("دیوار", True, detail))
+    if hint:  # worked, but only after dropping the proxy
+        LOGGER.warning("⚠ دیوار — %s", hint)
+    _report_check_summary(stages)
     return 0
 
 
@@ -681,7 +862,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     LOGGER.debug("settings: %s", json.dumps(settings.masked(), ensure_ascii=False, default=str))
 
     if args.check:
-        return command_check(settings)
+        return command_check(settings, args.env)
     if args.stats:
         return command_stats(settings, as_json=args.json)
     if args.test_alert:

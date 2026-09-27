@@ -8,10 +8,10 @@ Serves three things on port 8000:
   /copy              the whole bundle as base64 text + a copy button,
                      for browsers that block downloads inside the preview iframe
 
-The bundle itself lives in ``dist/divar_hunter.zip`` and is committed to git,
+The bundle itself lives in ``bundle/divar_hunter.zip`` and is committed to git,
 so a permanent direct link always exists even when this sandbox is asleep:
 
-  https://github.com/fa833618/divar-hunter/raw/arena/01a0d935-divar-hunter/dist/divar_hunter.zip
+  https://github.com/fa833618/divar-hunter/raw/arena/01a0d935-divar-hunter/bundle/divar_hunter.zip
 """
 
 from __future__ import annotations
@@ -22,10 +22,10 @@ import http.server
 import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ZIP = os.path.join(ROOT, "dist", "divar_hunter.zip")
+ZIP = os.path.join(ROOT, "bundle", "divar_hunter.zip")
 RAW_URL = (
     "https://github.com/fa833618/divar-hunter/raw/"
-    "arena/01a0d935-divar-hunter/dist/divar_hunter.zip"
+    "arena/01a0d935-divar-hunter/bundle/divar_hunter.zip"
 )
 
 PAGE = """<!doctype html>

@@ -30,6 +30,7 @@ Persian alert to your private Telegram chat or channel — with a one-tap button
 
 - [How it works](#how-it-works)
 - [Quickstart](#quickstart)
+- [راهنمای فعال‌سازی (فارسی)](#راهنمای-فعالسازی-فارسی)
 - [Try it without a bot token](#try-it-without-a-bot-token)
 - [Telegram setup](#telegram-setup)
 - [Divar setup: cities, categories, proxies](#divar-setup-cities-categories-proxies)
@@ -124,6 +125,81 @@ EXCLUDE_KEYWORDS=خراب,اوراق,قطعات,شکسته,معیوب,اقساط
 > **First run is silent by design.** `BOOTSTRAP_SILENT=true` marks everything currently listed as
 > "seen" without alerting, so you don't get 24 messages the moment you start. Only *new* listings
 > are alerted from then on.
+
+---
+
+## راهنمای فعال‌سازی (فارسی)
+
+**۱) نصب وابستگی‌ها**
+
+```bash
+cd divar-hunter
+python3 -m venv .venv
+.venv\Scripts\activate        # ویندوز
+source .venv/bin/activate     # مک / لینوکس
+pip install -r requirements.txt
+```
+
+**۲) ساخت فایل `.env`** — برنامه فقط فایلی به نام `.env` را می‌خواند، **نه** `.env.example`:
+
+```bash
+copy .env.example .env        # ویندوز
+cp .env.example .env          # مک / لینوکس
+```
+
+حداقل مقادیر لازم:
+
+```dotenv
+TELEGRAM_BOT_TOKEN=1234567890:AAE...     # از @BotFather
+TELEGRAM_CHAT_ID=123456789               # عددی؛ از @userinfobot
+TELEGRAM_PROXY=socks5h://127.0.0.1:10808 # برای ایران لازم است
+DIVAR_PROXY=                             # خالی بگذار!
+CITY=tehran
+CATEGORY=mobile-phones
+DEAL_MAX_PRICE=50000000                  # سقف قیمت معامله (تومان)
+DEAL_PRICE_FLOOR=5000000                 # زیر این را نادیده می‌گیرد (کلاهبرداری/بیعانه)
+```
+
+**۳) تلگرام** — سه شرط که اگر یکی نباشد پیام نمی‌آید:
+
+1. توکن از `@BotFather` (دستور `/newbot`)؛ بعد از Revoke توکن قبلی باطل می‌شود.
+2. **روی ربات خودت دکمهٔ Start را بزن** — تا وقتی خودت شروع نکنی، ربات اجازهٔ پیام دادن به تو را ندارد.
+3. `TELEGRAM_CHAT_ID` عددی باشد (برای کانال/گروه با `-100` شروع می‌شود و ربات باید مدیر باشد).
+
+**۴) پروکسی (مهم‌ترین نکته در ایران)**
+
+| هدف | تنظیم | چرا |
+| --- | --- | --- |
+| تلگرام | `TELEGRAM_PROXY=socks5h://127.0.0.1:PORT` | API تلگرام فیلتر است |
+| دیوار | `DIVAR_PROXY=` (خالی) | دیوار به IP خارج از ایران معمولاً ۴۰۳ می‌دهد |
+
+- حرف `h` در `socks5h://` ضروری است: یعنی DNS هم از داخل پروکسی حل می‌شود (وگرنه `api.telegram.org` در ایران درست resolve نمی‌شود).
+- پورت‌های رایج SOCKS: v2rayNG / نکوباکس `10808`، Clash `7890`، Tor Browser `9150`.
+- اگر فیلترشکن‌ات **کل سیستم** را VPN می‌کند، درخواست‌های دیوار هم از خارج رد می‌شوند و جواب نمی‌گیری؛ در این حالت فیلترشکن را روی حالت «پروکسی پورت‌دار» بگذار یا برای `DIVAR_PROXY` یک پروکسی ایرانی بده.
+- متغیر `PROXY_URL` روی **هر دو** اعمال می‌شود؛ برای همین بهتر است خالی بماند و فقط `TELEGRAM_PROXY` را پر کنی.
+- پروکسی `socks5` به پکیج `PySocks` نیاز دارد که در `requirements.txt` هست.
+
+**۵) تست مرحله‌به‌مرحله**
+
+```bash
+python main.py --check        # تشخیص خودکار + خلاصهٔ فارسی ✅/❌
+python main.py --test-alert   # یک پیام نمونه به تلگرامت می‌فرستد
+python main.py --once -v      # یک چرخهٔ واقعیِ جست‌وجو
+python main.py                # پایش دائم (Ctrl-C خروج تمیز)
+```
+
+`--check` سه مرحله را جدا تست می‌کند (تنظیمات → تلگرام → دیوار) و در پایان به فارسی می‌گوید کدام
+مرحله ❌ است و دقیقاً چه‌کار کنی. اگر دیوار با پروکسی جواب ندهد، خودش یک بار هم **بدون پروکسی**
+تست می‌کند و می‌گوید کدام حالت کار کرد. کدهای خروج: `0` سالم، `2` مشکل در `.env`،
+`3` تلگرام، `4` دیوار.
+
+**۶) اجرا می‌شود ولی پیام نمی‌آید؟**
+
+- **چرخهٔ اول عمداً ساکت است** (`BOOTSTRAP_SILENT=true`): همهٔ آگهی‌های فعلی «دیده‌شده» علامت
+  می‌خورند تا ۲۴ پیام پشت‌سرهم نگیری. از چرخهٔ دوم فقط آگهی‌های **جدید** پیام می‌شوند.
+- با `python main.py --stats` ببین چند آگهی بررسی و چند معامله پیدا شده. اگر صفر است،
+  `DEAL_MAX_PRICE` کمی بالاتر، یا `EXCLUDE_KEYWORDS` / `REQUIRE_PRICE` کمتر.
+- برای دیدن دلیل رد شدن هر آگهی، `LOG_LEVEL=DEBUG` را بگذار.
 
 ---
 
@@ -388,7 +464,7 @@ The suite is fully offline — no network, no bot token, no Divar access needed:
 
 ```bash
 pip install -r requirements-dev.txt
-pytest -q            # 244 tests
+pytest -q            # 249 tests
 ```
 
 Coverage includes Persian price parsing (millions/billions/compound amounts, deposits,
@@ -412,6 +488,8 @@ CI runs it on every push: `.github/workflows/tests.yml`.
 | `Telegram 401 Unauthorized` | Wrong/expired `TELEGRAM_BOT_TOKEN`. |
 | `Telegram 403 Forbidden` | You never pressed `/start` on the bot, or the bot isn't an admin of the channel. |
 | `chat not found` from `--check` | Same as above; `--check` prints the `/start` hint. |
+| `--check` says Telegram is fine, but no message arrives | You are watching a different chat than `TELEGRAM_CHAT_ID`, or the bot isn't a channel admin. Run `python main.py --test-alert` and look at *that* chat. |
+| `--check` warns to clear `DIVAR_PROXY` | A shared `PROXY_URL` (or a shell `HTTPS_PROXY`) routes Divar through a foreign exit, which Divar rejects. Keep the proxy in `TELEGRAM_PROXY` only. |
 | Alerts arrive without formatting | Telegram rejected the MarkdownV2 payload; the bot automatically re-sent it as plain text (`plain_fallback` counter). Nothing was lost. |
 | `socks5h` proxy errors | `pip install PySocks` (already in `requirements.txt`). |
 | Too many alerts at first start | Set `BOOTSTRAP_SILENT=true` (default) and `MAX_ALERTS_PER_CYCLE`. |
@@ -436,7 +514,7 @@ CI runs it on every push: `.github/workflows/tests.yml`.
 ├── Dockerfile, docker-compose.yml
 ├── deploy/divar-hunter.service
 ├── .github/workflows/tests.yml
-└── tests/                  # 244 offline tests + realistic API fixtures
+└── tests/                  # 249 offline tests + realistic API fixtures
 ```
 
 ---
